@@ -20,7 +20,7 @@ def load_benchmarking_config(ik_benchmarking_pkg, ik_benchmarking_config):
     # Open config file and parse content related to only ik_solvers
     with open(file_path, "r") as config_file:
         config_data = yaml.safe_load(config_file)
-
+    print('xxx zzz', config_data)
     ik_solvers_data = config_data.get("ik_solvers")
 
     if ik_solvers_data is None:
@@ -31,7 +31,7 @@ def load_benchmarking_config(ik_benchmarking_pkg, ik_benchmarking_config):
     return ik_solver_names
 
 
-def main():
+def main(args):
     # Print the path where the resulting files will be saved
     directory_path = os.getcwd()
 
@@ -43,7 +43,8 @@ def main():
 
     # Load IK solvers data from ik_benchmarking.yaml file
     ik_benchmarking_pkg = "ik_benchmarking"
-    ik_benchmarking_config = "ik_benchmarking.yaml"
+    ik_benchmarking_config = args.ik_config #"ik_benchmarking.yaml"
+    #ik_benchmarking_config = "ik_benchmarking.yaml"
     ik_solver_names = load_benchmarking_config(
         ik_benchmarking_pkg, ik_benchmarking_config
     )
@@ -86,7 +87,7 @@ def main():
 
     # Commands to run ik benchmarking with different IK solvers
     launch_commands = [
-        f"ros2 launch ik_benchmarking start_ik_benchmarking.launch.py ik_solver_name:={ik_solver_name}"
+            f"ros2 launch ik_benchmarking start_ik_benchmarking.launch.py ik_solver_name:={ik_solver_name} ik_conf:={ik_benchmarking_config}"
         for ik_solver_name in ik_solver_names
     ]
 
@@ -96,6 +97,13 @@ def main():
         # Wait indefinitely for completion to ensure sequential processing
         process.communicate()
 
-
+import argparse
 if __name__ == "__main__":
-    main()
+    print('xxx')
+    parser = argparse.ArgumentParser(description="main script .")
+    parser.add_argument('-c', '--ik_config', type=str, default='ik_benchmarking.yaml', help="headless ")
+    parser.add_argument('-p', '--position', type=float, default=100, help="headless ")
+    args = parser.parse_args()
+
+
+    main(args)

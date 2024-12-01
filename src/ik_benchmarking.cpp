@@ -71,8 +71,18 @@ void IKBenchmarking::gather_data() {
         const auto end_time = std::chrono::high_resolution_clock::now();
 
         // Calculate metrics
+        std::stringstream sss;
         if (found_ik) {
             success_count_++;
+        robot_state_->copyJointGroupPositions(joint_model_group_, random_joint_values);
+        sss << "[";
+        for (size_t i = 0; i < random_joint_values.size(); ++i) {
+            sss << random_joint_values[i];
+            if (i != random_joint_values.size() - 1) {
+                sss << ", ";
+            }
+        }
+        sss << "]";
         }
 
         const auto solve_time =
@@ -91,7 +101,7 @@ void IKBenchmarking::gather_data() {
         double orientation_error = orientation.angularDistance(ik_orientation);
 
         data_file_ << std::boolalpha << i + 1 << "," << found_ik << "," << solve_time.count() << ","
-                   << position_error << "," << orientation_error << "\n";
+                   << position_error << "," << orientation_error << "," <<ss.str().c_str() << "," <<sss.str().c_str()<<  "\n";
     }
 
     // Average IK solving time and success rate

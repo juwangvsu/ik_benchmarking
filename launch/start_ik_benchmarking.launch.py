@@ -65,7 +65,10 @@ def load_benchmarking_config(ik_benchmarking_pkg, ik_benchmarking_config):
 def prepare_benchmarking(context, *args, **kwargs):
     # Load the ik_benchmarking configuration data
     ik_benchmarking_pkg = "ik_benchmarking"
-    ik_benchmarking_config = "ik_benchmarking.yaml"
+    ik_conf_name = LaunchConfiguration("ik_conf").perform(context)
+    ik_benchmarking_config = ik_conf_name 
+    print('zzzz , ' , ik_conf_name)
+    #ik_benchmarking_config = "ik_benchmarking.yaml"
     benchmarking_config = load_benchmarking_config(
         ik_benchmarking_pkg, ik_benchmarking_config
     )
@@ -160,7 +163,12 @@ def generate_launch_description():
         default_value="",
         description="IK solver name corresponding to the name value in ik_benchmarking.yaml config file.",
     )
+    declare_ik_conf_arg = DeclareLaunchArgument(
+        "ik_conf",
+        default_value="xxxx.yaml",
+        description="IK conf name corresponding to the name value in ik_benchmarking.yaml config file.",
+    )
 
     return LaunchDescription(
-        [declare_ik_solver_name_arg, OpaqueFunction(function=prepare_benchmarking)]
+        [declare_ik_conf_arg, declare_ik_solver_name_arg, OpaqueFunction(function=prepare_benchmarking)]
     )
