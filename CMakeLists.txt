@@ -68,7 +68,7 @@ install(TARGETS
   ik_benchmarking_client
   DESTINATION lib/${PROJECT_NAME})
 
-install(DIRECTORY launch config
+install(DIRECTORY launch config rviz urdf
     DESTINATION share/${PROJECT_NAME}
 )
 
