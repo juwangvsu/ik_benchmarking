@@ -17,6 +17,7 @@ setup(
             "ik_benchmarking_data_generator = ik_benchmarking.ik_benchmarking_data_generator:main",
             "ik_benchmarking_data_visualizer = ik_benchmarking.ik_benchmarking_data_visualizer:main",
             "ik_pub = ik_benchmarking.ik_pub:main",
+            "marker = ik_benchmarking.marker:main",
         ],
     },
 )

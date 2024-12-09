@@ -1,6 +1,6 @@
-moveit_config_pkg: rrr_arm_moveit_config  # Name of the MoveIt configuration package of the robot
-robot_name: rrr_arm  # Name of the robot
-planning_group: arm  # Planning group configured inside the MoveIt config package (usually in the file config/robot_name.srdf)
+moveit_config_pkg: moveit_resources_nv6_moveit_config  # Name of the MoveIt configuration package of the robot
+robot_name: moveit_resources_nv6  # Name of the robot
+planning_group: nv6_arm  # Planning group configured inside the MoveIt config package (usually in the file config/robot_name.srdf)
 sample_size: 10  # Number of samples to run for collecting IK benchmarking data for different solvers
 random_seed: 12345  # Seed to use for random number generation, for generating reproducible results
 ik_timeout: 0.1  # Maximum duration (in seconds) allowed for an IK solver to find a solution before being considered unsuccessful

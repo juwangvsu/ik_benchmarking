@@ -24,7 +24,7 @@ def generate_launch_description():
     
     declare_rviz_config_file_cmd = DeclareLaunchArgument(
         'rviz_config_file',
-        default_value=os.path.join(bringup_dir, 'rviz', 'rrr.rviz'),
+        default_value=os.path.join(bringup_dir, 'rviz', 'panda.rviz'),
         description='Full path to the RVIZ config file to use')  
     declare_use_robot_state_pub_cmd = DeclareLaunchArgument(
         'use_robot_state_pub',
@@ -44,7 +44,7 @@ def generate_launch_description():
         default_value=os.path.join(bringup_dir, 'urdf', 'panda.urdf'),
         description='Whether to start RVIZ')
  
-
+    print('urdf_file ', urdf_file)
     start_robot_state_publisher_cmd = Node(
         condition=IfCondition(use_robot_state_pub),
         package='robot_state_publisher',

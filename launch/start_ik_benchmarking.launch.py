@@ -165,7 +165,7 @@ def generate_launch_description():
     )
     declare_ik_conf_arg = DeclareLaunchArgument(
         "ik_conf",
-        default_value="xxxx.yaml",
+        default_value="ik_benchmarking.yaml",
         description="IK conf name corresponding to the name value in ik_benchmarking.yaml config file.",
     )
 

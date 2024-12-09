@@ -30,7 +30,7 @@ class IKBenchmarking {
           robot_state_(new moveit::core::RobotState(robot_model_)),
           calculation_done_(false) {
         data_file_.open("ik_benchmarking_data.csv", std::ios::app);
-        data_file_ << "trial,found_ik,solve_time,position_error,orientation_error\n";
+        data_file_ << "trial,found_ik,solve_time,position_error,orientation_error,px,py,pz,t1, t2,t3,t4,t5,t6,t7, p1, p2, p3, p4, p5, p6 , p7\n";
     }
 
     /**
@@ -51,7 +51,7 @@ class IKBenchmarking {
             "ik_benchmarking_data"
             ".csv",
             std::ios::app);
-        data_file_ << "trial,found_ik,solve_time,position_error,orientation_error\n";
+        data_file_ << "trial,found_ik,solve_time,position_error,orientation_error,px,py,pz,t1, t2,t3,t4,t5,t6,t7, p1, p2, p3, p4, p5, p6 , p7\n";
     }
 
     /**
@@ -72,7 +72,7 @@ class IKBenchmarking {
           robot_state_(new moveit::core::RobotState(robot_model_)),
           calculation_done_(false) {
         data_file_.open(std::string(solver) + "_" + output_file + ".csv", std::ios::app);
-        data_file_ << "trial,found_ik,solve_time,position_error,orientation_error\n";
+        data_file_ << "trial,found_ik,solve_time,position_error,orientation_error,px, py, pz, t1, t2,t3,t4,t5,t6,t7, p1, p2, p3, p4, p5, p6 , p7\n";
     }
 
     /**

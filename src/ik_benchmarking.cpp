@@ -27,6 +27,7 @@ void IKBenchmarking::initialize() {
 
     robot_state_->setToDefaultValues();
 }
+//trial,found_ik,solve_time,position_error,orientation_error,t1, t2,t3,t4,t5,t6,t7, p1, p2, p3, p4, p5, p6 , p7
 
 void IKBenchmarking::gather_data() {
     // Collect IK solving data
@@ -50,14 +51,14 @@ void IKBenchmarking::gather_data() {
         std::vector<double> random_joint_values;
         robot_state_->copyJointGroupPositions(joint_model_group_, random_joint_values);
         std::stringstream ss;
-        ss << "[";
+        ss << "";
         for (size_t i = 0; i < random_joint_values.size(); ++i) {
             ss << random_joint_values[i];
             if (i != random_joint_values.size() - 1) {
                 ss << ", ";
             }
         }
-        ss << "]";
+        ss << "";
         RCLCPP_DEBUG(logger_, "The sampled random joint values are:\n%s\n", ss.str().c_str());
 
         // Randomize the initial seed state of the robot before solving IK
@@ -70,19 +71,18 @@ void IKBenchmarking::gather_data() {
             robot_state_->setFromIK(joint_model_group_, tip_link_pose, ik_timeout_);
         const auto end_time = std::chrono::high_resolution_clock::now();
 
-        // Calculate metrics
-        std::stringstream sss;
+        std::stringstream ik_sol;
         if (found_ik) {
             success_count_++;
         robot_state_->copyJointGroupPositions(joint_model_group_, random_joint_values);
-        sss << "[";
+        ik_sol << "";
         for (size_t i = 0; i < random_joint_values.size(); ++i) {
-            sss << random_joint_values[i];
+            ik_sol << random_joint_values[i];
             if (i != random_joint_values.size() - 1) {
-                sss << ", ";
+                ik_sol << ", ";
             }
         }
-        sss << "]";
+        ik_sol << "";
         }
 
         const auto solve_time =
@@ -94,6 +94,7 @@ void IKBenchmarking::gather_data() {
         Eigen::Vector3d position_diff =
             ik_tip_link_pose.translation() - tip_link_pose.translation();
         double position_error = position_diff.norm();
+	Eigen::Vector3d tipxyz = ik_tip_link_pose.translation();
 
         // Calculate orientation error (angle between two quaternions)
         Eigen::Quaterniond orientation(tip_link_pose.rotation());
@@ -101,7 +102,9 @@ void IKBenchmarking::gather_data() {
         double orientation_error = orientation.angularDistance(ik_orientation);
 
         data_file_ << std::boolalpha << i + 1 << "," << found_ik << "," << solve_time.count() << ","
-                   << position_error << "," << orientation_error << "," <<ss.str().c_str() << "," <<sss.str().c_str()<<  "\n";
+                   << position_error << "," << orientation_error << "," 
+		   << tipxyz(0) << "," << tipxyz(1) << "," << tipxyz(2) <<","
+		   << ss.str().c_str() << "," <<ik_sol.str().c_str()<<  "\n";
     }
 
     // Average IK solving time and success rate
