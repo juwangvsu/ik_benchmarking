@@ -15,6 +15,27 @@ urdf loading path:
 	ros2_ws/install/moveit_resources_panda_moveit_config/ build from
 		src/moveit_resources/panda_moveit_config
 
+---------12/19/24 ik plugin locations ------------
+plugin registered name/plugin_class 
+KDL:
+	kdl_kinematics_plugin/KDLKinematicsPlugin
+	/opt/ros/humble/lib/libmoveit_kdl_kinematics_plugin.so
+bio_ik: 
+	bio_ik/BioIKKinematicsPlugin
+	local build
+trac:
+	trac_ik_kinematics_plugin/TRAC_IKKinematicsPlugin
+	local build
+
+-----------12/19/24 ik server planning group tip link number ----------
+ik solver only accept 1 tip link?
+planning group must be chain for KDL and TRAC?
+
+debugging code added :
+	ik_benchmarking.cpp
+	robot_state_->setFromIK(joint_model_group_, tip_link_pose, ik_timeout_);
+		solve IK
+		moveit::core::RobotState
 -----------12/9/24 bio_ik works now for rrr and nv6 ----------
 previous error due to bio_ik_kinematics.yaml not modified from panda's
 

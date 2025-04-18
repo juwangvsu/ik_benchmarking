@@ -14,7 +14,7 @@ class TaskNode(Node):
     def __init__(self):
         super().__init__("marker")
         self.publisher2_ = self.create_publisher(Marker, "mymarker", 10)
-        self.timer = self.create_timer(10., self.timer_callback)
+        self.timer = self.create_timer(1., self.timer_callback)
         self.i = 0
         self.tf_static_broadcaster = StaticTransformBroadcaster(self)
 

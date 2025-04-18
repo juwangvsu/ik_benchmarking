@@ -17,9 +17,13 @@ void IKBenchmarking::initialize() {
 
     // Load the tip link name (not the end effector)
     auto const &link_names = joint_model_group_->getLinkModelNames();
-
+    std::string tmpstr; 
+    for (int i=0;i<link_names.size();i++)
+	    tmpstr+=(link_names[i]+", ");
+    RCLCPP_INFO(logger_, "planning group links %s\n" , tmpstr.c_str());
     if (!link_names.empty()) {
         tip_link_name_ = link_names.back();
+	RCLCPP_INFO(logger_, "planning group tip link %s\n" , tip_link_name_.c_str());
     } else {
         RCLCPP_ERROR(logger_, "ERROR: The move group is corrupted. Links count is zero.\n");
         rclcpp::shutdown();
@@ -59,7 +63,7 @@ void IKBenchmarking::gather_data() {
             }
         }
         ss << "";
-        RCLCPP_DEBUG(logger_, "The sampled random joint values are:\n%s\n", ss.str().c_str());
+        RCLCPP_INFO(logger_, "The sampled random joint values are:\n%s\n", ss.str().c_str());
 
         // Randomize the initial seed state of the robot before solving IK
         robot_state_->setToRandomPositions(joint_model_group_, generator_);
