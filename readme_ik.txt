@@ -1,4 +1,7 @@
 sticky:
+
+see readme_ik.txt VisionRobot
+
 ik_benchmarking_nv6.yaml:
 	moveit_config_pkg and robot_name fields must match, i.e.
 		moveit_config_pkg: moveit_resources_nv6_moveit_config
