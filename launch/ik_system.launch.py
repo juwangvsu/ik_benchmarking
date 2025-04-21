@@ -34,7 +34,7 @@ def generate_launch_description():
             parameters=[{
                 'url': 'wss://service.zenimotion.com/nats',
                 'sub': 'subject.pose',
-                'frame_id': 'panda_link0'
+                'frame': 'panda_link0'
             }],
             remappings=[
                 ('/goal_pose', '/pose')
