@@ -18,6 +18,9 @@ urdf loading path:
 	ros2_ws/install/moveit_resources_panda_moveit_config/ build from
 		src/moveit_resources/panda_moveit_config
 
+-------9/13/25 rrr fork ------------------------------
+ros2 launch ik_benchmarking launch.rviz.py urdf_file:=src/ik_benchmarking/urdf/rrr_arm_full_fork.urdf rviz_config_file:=src/ik_benchmarking/rviz/rrr.rviz
+
 ---------12/19/24 ik plugin locations ------------
 plugin registered name/plugin_class 
 KDL:
