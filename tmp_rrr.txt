@@ -1,0 +1,63 @@
+[INFO] [launch]: Default logging verbosity is set to INFO
+zzzz ,  ik_benchmarking_rrr.yaml
+
+ Running calculations for IK Solver: bio_ik 
+
+[INFO] [ik_benchmarking_server-1]: process started with pid [30589]
+[INFO] [ik_benchmarking_client-2]: process started with pid [30591]
+[ik_benchmarking_client-2] [INFO] [1733695983.307181559] [ik_benchmarking_client]: IK Benchmarking action client started.
+[ik_benchmarking_server-1] [INFO] [1733695983.307831934] [ik_benchmarking_server]: IK Benchmarking action server started.
+[ik_benchmarking_server-1] [INFO] [1733695983.308700185] [ik_benchmarking_server]: Received IKBenchmark goal request with solver bio_ik
+[ik_benchmarking_server-1] [INFO] [1733695983.308797718] [ik_benchmarking_server]: Executing goal
+[ik_benchmarking_server-1] [INFO] [1733695983.331346649] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0.0193577 seconds
+[ik_benchmarking_server-1] [INFO] [1733695983.331366384] [moveit_robot_model.robot_model]: Loading robot model 'rrr_arm'...
+[ik_benchmarking_server-1] [INFO] [1733695983.331370135] [moveit_robot_model.robot_model]: No root/virtual joint specified in SRDF. Assuming fixed joint
+[ik_benchmarking_server-1] [WARN] [1733695983.331440840] [moveit_robot_model.robot_model]: Could not identify parent group for end-effector 'hand'
+[ik_benchmarking_server-1] [WARN] [1733695983.333054161] [moveit_ros.robot_model_loader]: No kinematics plugins defined. Fill and load kinematics.yaml!
+[ik_benchmarking_server-1] [ERROR] [1733695983.333133272] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333157512] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333166021] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333173594] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333180704] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333188034] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333195021] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333202194] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333209604] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733695983.333216566] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [INFO] [1733695983.333222628] [ik_benchmarker]: Success rate = 0.000000 and average IK solving time is 1.600000 microseconds
+[ik_benchmarking_server-1] 
+[ik_benchmarking_client-2] [INFO] [1733695983.333580168] [ik_benchmarking_client]: The IK Benchmarking action succeeded.
+[INFO] [ik_benchmarking_client-2]: process has finished cleanly [pid 30591]
+[INFO] [ik_benchmarking_server-1]: process has finished cleanly [pid 30589]a
+
+
+------------------------------------------------
+[ik_benchmarking_server-1] [INFO] [1733696519.443316959] [ik_benchmarking_server]: Received IKBenchmark goal request with solver KDL
+[ik_benchmarking_server-1] [INFO] [1733696519.443638003] [ik_benchmarking_server]: Executing goal
+[ik_benchmarking_server-1] [INFO] [1733696519.464159975] [moveit_rdf_loader.rdf_loader]: Loaded robot model in 0.018735 seconds
+[ik_benchmarking_server-1] [INFO] [1733696519.464174632] [moveit_robot_model.robot_model]: Loading robot model 'rrr_arm'...
+[ik_benchmarking_server-1] [INFO] [1733696519.464178442] [moveit_robot_model.robot_model]: No root/virtual joint specified in SRDF. Assuming fixed joint
+[ik_benchmarking_server-1] [WARN] [1733696519.464251622] [moveit_robot_model.robot_model]: Could not identify parent group for end-effector 'hand'
+[ik_benchmarking_server-1] [WARN] [1733696519.466228004] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[ik_benchmarking_server-1] [INFO] [1733696519.484942650] [ik_benchmarker]: Success rate = 1.000000 and average IK solving time is 1852.200000 microseconds
+[ik_benchmarking_server-1] 
+[ik_benchmarking_client-2] [INFO] [1733696519.485271246] [ik_benchmarking_client]: The IK Benchmarking action succeeded.
+
+----------TRAC_IK
+ot_model]: Loading robot model 'rrr_arm'...
+[ik_benchmarking_server-1] [INFO] [1733696706.737292916] [moveit_robot_model.robot_model]: No root/virtual joint specified in SRDF. Assuming fixed joint
+[ik_benchmarking_server-1] [WARN] [1733696706.737358942] [moveit_robot_model.robot_model]: Could not identify parent group for end-effector 'hand'
+[ik_benchmarking_server-1] [WARN] [1733696706.738665520] [moveit_ros.robot_model_loader]: No kinematics plugins defined. Fill and load kinematics.yaml!
+[ik_benchmarking_server-1] [ERROR] [1733696706.738752499] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738776093] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738784630] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738792267] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738799569] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738807014] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738814378] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738821643] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738828755] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [ERROR] [1733696706.738835997] [moveit_robot_state.robot_state]: No kinematics solver instantiated for group 'arm'
+[ik_benchmarking_server-1] [INFO] [1733696706.738841887] [ik_benchmarker]: Success rate = 0.000000 and average IK solving time is 1.500000 microseconds
+[ik_benchmarking_server-1] 
+
