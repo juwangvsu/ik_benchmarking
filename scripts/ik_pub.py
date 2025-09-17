@@ -23,6 +23,7 @@ def get_joint_name_value(urdfname, line):
         joint_names = "panda_joint1,panda_joint2,panda_joint3, panda_joint4, panda_joint5,panda_joint6,panda_joint7"
         positions_ik=f"{joint_ik[0]},{joint_ik[1]},{joint_ik[2]},{joint_ik[3]},{joint_ik[4]},{joint_ik[5]},{joint_ik[6]}"
         positions_t=f"{joint_t[0]},{joint_t[1]},{joint_t[2]},{joint_t[3]},{joint_t[4]},{joint_t[5]},{joint_t[6]}"
+        frame_id="panda_link0"
     elif urdfname == 'rrr': #_arm_full_2_back.urdf':
         joint_t = line.split(',')[8:11]
         joint_t =[float(x) for x in joint_t]
@@ -31,6 +32,7 @@ def get_joint_name_value(urdfname, line):
         joint_names = "joint_1,joint_2,joint_3"
         positions_ik=f"{joint_ik[0]},{joint_ik[1]},{joint_ik[2]}"
         positions_t=f"{joint_t[0]},{joint_t[1]},{joint_t[2]}"
+        frame_id="base_link"
     elif urdfname == 'rrrfork': #_arm_full_2_back.urdf':
         joint_t = line.split(',')[8:15]
         joint_t =[float(x) for x in joint_t]
@@ -39,8 +41,10 @@ def get_joint_name_value(urdfname, line):
         joint_names = "joint_1,joint_2,joint_3,joint_4, joint_41, joint_42, joint_43"
         positions_ik=f"{joint_ik[0]},{joint_ik[1]},{joint_ik[2]},{joint_ik[3]},{joint_ik[4]},{joint_ik[5]},{joint_ik[6]}"
         positions_t=f"{joint_t[0]},{joint_t[1]},{joint_t[2]},{joint_t[3]},{joint_t[4]},{joint_t[5]},{joint_t[6]}"
+        frame_id="base_link"
 
-    return joint_t, joint_ik, joint_names, positions_ik, positions_t
+    return joint_t, joint_ik, joint_names, positions_ik, positions_t, frame_id
+    #return ik sol and ground truth
 
 def main(args):
     # Construct the configuration file path
@@ -61,8 +65,10 @@ def main(args):
             print('unsucc case # ', lnum)
             continue
         print('processing line ', line)
-        joint_t, joint_ik, joint_names, positions_ik, positions_t = get_joint_name_value(args.urdf,line)
+        joint_t, joint_ik, joint_names, positions_ik, positions_t, frame_id = get_joint_name_value(args.urdf,line)
 
+        #xyz = positions_t #this is already a string, but it is the joint value, not xyz 9/15/25
+        xyz="0.3,0.3,0.5"
         directory_path = os.getcwd()
 
     # Commands to run ik benchmarking with different IK solvers
@@ -81,7 +87,8 @@ def main(args):
 
         process = subprocess.Popen(launch_command_ik, shell=True, executable="/bin/bash")
         process_t = subprocess.Popen(launch_command_t, shell=True, executable="/bin/bash")
-        command_mark = "python ~/ros2_ws/install/ik_benchmarking/lib/ik_benchmarking/marker.py" 
+        command_mark = "python ~/ros2_ws/install/ik_benchmarking/lib/ik_benchmarking/marker.py --ros-args -p frame_id:="+frame_id +" -p xyz:="+xyz
+
         process_marker = subprocess.Popen(command_mark, shell=True, executable="/bin/bash")
         # Wait indefinitely for completion to ensure sequential processing
         #process.communicate()

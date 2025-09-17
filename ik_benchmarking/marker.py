@@ -13,9 +13,12 @@ import numpy as np
 class TaskNode(Node):
     def __init__(self):
         super().__init__("marker")
+        self.declare_parameter('frame_id', 'base_link')
+        self.declare_parameter('xyz', '0.5,0.5,0.5')
         self.publisher2_ = self.create_publisher(Marker, "mymarker", 10)
         self.timer = self.create_timer(1., self.timer_callback)
         self.i = 0
+
         self.tf_static_broadcaster = StaticTransformBroadcaster(self)
 
     # publish base_link to markerframe tf for visualization
@@ -39,9 +42,12 @@ class TaskNode(Node):
         self.tf_static_broadcaster.sendTransform(t)
 
     def timer_callback(self):
+        frame_id = self.get_parameter('frame_id').get_parameter_value().string_value
+        xyz_marker = self.get_parameter('xyz').get_parameter_value().string_value
         msg = String()
         marker = Marker()
-        marker.header.frame_id = "base_link"
+        marker.header.frame_id = frame_id 
+        #marker.header.frame_id = "base_link"
         marker.type = marker.SPHERE
         marker.action = marker.ADD
         marker.scale.x = 0.1
@@ -50,11 +56,13 @@ class TaskNode(Node):
         marker.color.g = 1.0 
         marker.color.r = 1.0 
         marker.color.a = 1.0
-        xyz=np.random.randn(3)/5.0 + np.array([0.568, 0.156, 0.8])
+        #xyz=np.random.randn(3)/5.0 + np.array([0.568, 0.156, 0.8])
+
         rpy=[3.14,0,2.5]
-        marker.pose.position.x = xyz[0] 
-        marker.pose.position.y = xyz[1] #0.156
-        marker.pose.position.z = xyz[2] #.4 
+        marker.pose.position.x = float(xyz_marker.split(",")[0])
+        marker.pose.position.y = float(xyz_marker.split(",")[1])# xyz[1] #0.156
+        marker.pose.position.z = float(xyz_marker.split(",")[2]) #xyz[2] #.4 
+        xyz=[marker.pose.position.x,marker.pose.position.y,marker.pose.position.z]
         qw, qx, qy, qz = quaternion_from_euler(
             float(rpy[0]), float(rpy[1]), float(rpy[2]))
 
