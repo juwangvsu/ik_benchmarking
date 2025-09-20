@@ -1,5 +1,5 @@
-moveit_config_pkg: rrrfork_arm_moveit_config  # Name of the MoveIt configuration package of the robot
-robot_name: rrrfork_arm  # Name of the robot
+moveit_config_pkg: rrrforkfull_moveit_config  # Name of the MoveIt configuration package of the robot
+robot_name: rrrforkfull 
 planning_group: arm  # Planning group configured inside the MoveIt config package (usually in the file config/robot_name.srdf)
 sample_size: 10  # Number of samples to run for collecting IK benchmarking data for different solvers
 random_seed: 12345  # Seed to use for random number generation, for generating reproducible results
