@@ -1,4 +1,6 @@
 sticky:
+ repo: ~/ros2_ws/src/ik_benchmarking,
+         https://github.com/juwangvsu/ik_benchmarking.git
 
 see readme_ik.txt VisionRobot
 
@@ -25,14 +27,90 @@ issue: csv data does not contain end effector xyz. due to orig ik benchmarking c
 	log_truepred.csv, joint 1-4, gripper 1, 2, 16 joints,
 
 issue:
-	bio_ik_rrrfork.csv don't have xyz,error, but panda.csv has
+	csv file format: seqn, succ, tm, perr, oerr, x,y,x, [gt jointvalues],[ik_sol jointvalues]
 
+	if fail, csv contain ik_sol values, else ik_sol is empty, thus the difference
 	ik_benchmarking.yaml 15 fields (fail) 22 fields [succ]
 		moveit_resources_panda_moveit_config/moveit_resources_panda/panda_arm
 	ik_benchmarking_rrrfork.yaml 15 fields (fail) 22 fields [succ]
 		rrrfork_arm_moveit_config/rrrfork_arm/arm
 	ik_benchmarking_rrr.yaml 11 fields (false case) 14 fields (true case)
 		rrr_arm_moveit_config/rrr_arm/arm
+
+  5 -----------4/19/25 kdl ik cpp -------------------------------
+  6 ros2 run kdl_ik_cpp kdl_ik_node --ros-args   -p urdf_fallback_path:=src/nv6/    urdf/panda.urdf   -p base_link:=panda_link0 -p end_link:=panda_link7
+  7 
+  8 ros2 topic pub /target_pose geometry_msgs/PoseStamped "header:
+  9   frame_id: 'panda_link1'
+ 10 pose:
+ 11   position: {x: 0.5, y: 0.2, z: 0.1}
+ 12   orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}"
+
+ 14 ----------kdl python pkg pxtt, ws2 -------------------------------------
+ 15 https://github.com/yongtang/ros2_kinematics_kdl
+ 16 https://github.com/yongtang/motion_agent
+ 17 https://github.com/juwangvsu/ik_benchmarking.git
+ 18         clone to nv6_ws/src/
+ 19         build inside ros1b, launch at host
+ 20 
+ 21 (1) docker exec -it ros1b bash
+ 22         colcon build
+ 23 (2) host:nv6_ws
+ 24         2.*) ros2 launch ik_benchmarking ik_system.launch.py
+ 25                 launch everything, or below
+ 26         2.1) ros2 run ros2_kinematics_kdl ik_node --ros-args -p urdf_path:=s    rc/nv6/urdf/panda.urdf -p base_link:="panda_link0" -p ee_link:=panda_link6
+ 27         2.2a)ros2 topic pub /pose geometry_msgs/PoseStamped '{"header": {"fr    ame_id": "panda_link0"},"pose": {"position": {"x": 0.3,
+ 28    "y": 0.0,
+ 29    "z": 0.5
+ 30   },"orientation": {
+ 31    "x": 0.0,
+ 32    "y": 0.0,
+ 33    "z": 0.0,
+ 34    "w": 1.0}}}'
+ 35         (2.2b)
+ 36         ros2 run motion_agent agent --ros-args -p url:=wss://service.zenimot    ion.com/nats -p sub:=subject.pose -p frame_id:=panda_link0 --remap /goal_pos    e:=/pose
+ 37 
+ 38         (2.3)
+ 39         ros2 launch ik_benchmarking launch.rviz.py urdf_file:=src/ik_benchma    rking/urdf/pandahandfork_fullpath7_v2.urdf rviz_config_file:=src/ik_benchmar    king/rviz/panda.rviz
+ 40 
+ 41 (0.a) start docker ros1b, ros2_ws if needed
+ 42         cd tang/VisionRobot/nv8arm/foxy/nv6_ws
+ 43         docker run -t -d --restart always -v $PWD:/workspace -v /data:/data     -w /workspace --net host --name ros1b jwang3vsu/ros-humble-ros1-bridge-build    er:latest bash
+ 44 
+ 45         cd ~/ros2_ws
+ 46         docker run -t -d --restart always -v $PWD:/workspace -v /data:/data     -w /workspace --net host --name ros2_ws jwang3vsu/ros-humble-ros1-bridge-bui    lder:latest bash
+ 47 
+ 48 (0.b) host
+ 49         sudo apt install ros-humble-moveit-resources-panda-description
+ 50         sudo apt install ros-humble-joint-state-publisher-gui
+ 51         /usr/bin/python3 -m pip install urdf_parser_py
+ 52                 ros2 default use system python3
+ 53 
+ 54 ---------------4/17/25 ros2 ik using kdl pxtt docker---------------------
+ 55 
+ 56 nv6_ws/src/kdl_kinematics
+ 57         cpp kdl example
+ 58         works
+ 59 
+ 60         ros2 run kdl_kinematics kdl_kinematics_node --ros-args -p urdf_fallb    ack_path:=/tmp/rrr_arm_full.urdf
+ 61 [INFO] [1744601724.399189993] [kdl_kinematics_node]: FK Position: x=0.145000     y=0.000000 z=1.375000
+     y=0.000000 z=1.375000
+ 62 
+ 63 nv6_ws/src/kdl_kinematics_py
+ 64         py version,colcon build no issue
+ 65         require kdl_parser_py binding build, require PyKDL. apt install pyth    on3-pykdl works in docker,
+ 66         but pxtt python env is too messed up. import PyKDL,
+ 67         see readme_ros2 for docker ros2 setup
+ 68 
+ 69         ros2 run kdl_kinematics_py kdl_kinematics_node --ros-args -p urdf_fa    llback_path:=src/nv6/urdf/rrr_arm_full.urdf
+ 70                 FK result: x=0.1450, y=0.0000, z=1.3750
+ 71 
+ 72         ros2 run kdl_kinematics_py kdl_ik_node --ros-args   -p urdf_fallback    _path:=src/nv6/urdf/rrr_arm_full.urdf   -p base_link:=base_link -p end_link:    =gripper_link_1
+ 73 
+ 74 in progress
+ ----------------------------------------
+ 
+
 ---------12/19/24 ik plugin locations ------------
 plugin registered name/plugin_class 
 KDL:
@@ -61,7 +139,21 @@ todo:
 	more test on rrr robot, bio_ik, create rrr_fork.urdf and moveit_config
 	pkg.
 
------------11/30/24-----------------
+100 -----------11/30/24 hpzbook, ros2_ws, (pxtt docker ros2_ws) visualize bio_ik-------------
+101         cd src/ik_benchmarking
+102    pub:
+103         ros2 run ik_benchmarking ik_pub.py -c bio_ik_ik_benchmarking_data.csv -u rrr -l 4
+104                 publish joint_states, line 4 from csv
+105         ros2 run ik_benchmarking ik_pub.py -c bio_ik_ik_benchmarking_data.csv -u panda
+106     rviz:
+107         ros2 launch ik_benchmarking launch.rviz.py urdf_file:=src/ik_benchmarking/urdf/panda.urdf rviz_config_file:=src/ik_bench    marking/rviz/panda.rviz
+108         ros2 launch ik_benchmarking launch.rviz.py urdf_file:=src/ik_benchmarking/urdf/rrr_arm_full_fork.urdf rviz_config_file:=    src/ik_benchmarking/rviz/rrr.rviz
+109         ros2 launch ik_benchmarking launch.rviz.py urdf_file:=src/ik_benchmarking/urdf/pandahandfork_fullpath7_v2.urdf rviz_conf    ig_file:=src/ik_benchmarking/rviz/panda.rviz
+110 
+111 status:
+112         bio_ik result visualized for panda
+
+`-----------11/30/24-----------------
 visualize the result of bio_ik:
 	ros2 run ik_benchmarking ik_pub.py -c bio_ik_ik_benchmarking_data.csv -u rrr
 	ros2 run ik_benchmarking ik_pub.py -c bio_ik_ik_benchmarking_data.csv -u panda 

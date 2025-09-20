@@ -78,15 +78,15 @@ void IKBenchmarking::gather_data() {
         std::stringstream ik_sol;
         if (found_ik) {
             success_count_++;
-        robot_state_->copyJointGroupPositions(joint_model_group_, random_joint_values);
-        ik_sol << "";
-        for (size_t i = 0; i < random_joint_values.size(); ++i) {
-            ik_sol << random_joint_values[i];
-            if (i != random_joint_values.size() - 1) {
+            robot_state_->copyJointGroupPositions(joint_model_group_, random_joint_values);
+            ik_sol << "";
+            for (size_t i = 0; i < random_joint_values.size(); ++i) {
+              ik_sol << random_joint_values[i];
+              if (i != random_joint_values.size() - 1) {
                 ik_sol << ", ";
+              }
             }
-        }
-        ik_sol << "";
+            ik_sol << "";
         }
 
         const auto solve_time =
