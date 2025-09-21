@@ -32,7 +32,19 @@ moveit setup:
 	src/rrrforkfull_moveit_config
 
 
-status: xx work with current planning group arm, 4 joints. to test more complex setting...
+status: work with current planning group arm, 6 joints. to test more complex setting...
+	normally kdl and trac is better then bio_ik, but:...
+
+kdl:
+	[ERROR] [1758424620.225476652] [moveit_kinematics_base.kinematics_base]: Group 'arm' is not a chain
+ planning group links link_1, link_2, link_3, link_4, gripper_link_1, gripper_link_2, 
+Kinematics solver of type 'kdl_kinematics_plugin/KDLKinematicsPlugin' could not be initialized for group 'arm'
+
+trac:
+	Kinematics solver N25trac_ik_kinematics_plugin23TRAC_IKKinematicsPluginE does not support joint group arm.  Error: This plugin only supports joint groups which are chains
+
+bio_ik:
+	Success rate = 0.500000 
 
 -------9/15/25 rrr fork visualize hpzbook------------------------------
 
